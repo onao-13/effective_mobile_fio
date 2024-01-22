@@ -42,8 +42,6 @@ func (h Human) Validate() error {
 		return fmt.Errorf("имя не указано")
 	case len(h.Surname) == 0:
 		return fmt.Errorf("фамилия не указана")
-	case len(h.Patronymic) == 0:
-		return fmt.Errorf("отчество не указано")
 	case len(h.Gender) == 0:
 		return fmt.Errorf("пол не указан")
 	}
@@ -57,8 +55,6 @@ func (h HumanCreate) Validate() error {
 		return fmt.Errorf("имя не указано")
 	case len(h.Surname) == 0:
 		return fmt.Errorf("фамилия не указана")
-	case len(h.Patronymic) == 0:
-		return fmt.Errorf("отчество не указано")
 	}
 
 	return nil
@@ -72,8 +68,6 @@ func (h HumanUpdate) Validate() error {
 		return fmt.Errorf("имя не указано")
 	case len(h.Surname) == 0:
 		return fmt.Errorf("фамилия не указана")
-	case len(h.Patronymic) == 0:
-		return fmt.Errorf("отчество не указано")
 	case len(h.Gender) == 0:
 		return fmt.Errorf("пол не указан")
 	}
