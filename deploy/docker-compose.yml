@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  fio-service:
+    image: fio-service
+    env_file:
+      - config/.env
+    networks:
+      - fio
+    ports:
+      - "8100:8100"
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    env_file:
+      - config/db.env
+    volumes:
+      - /db:/var/lib/postgresql/data
+    networks:
+      - fio
+    ports:
+      - "5432:5432"
+
+networks:
+  fio:
+
+volumes:
+  db:
