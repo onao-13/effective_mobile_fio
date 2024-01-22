@@ -1,0 +1,245 @@
+openapi: 3.0.3
+info:
+  title: FIO Service
+  description: FIO Service
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8100/api/v1'
+tags:
+  - human
+paths:
+  /humans:
+    get:
+      tags:
+        - human
+      operationId: humanGet
+      parameters:
+        - $ref: "#/components/parameters/start"
+        - $ref: "#/components/parameters/size"
+        - $ref: "#/components/parameters/id-pagination"
+        - $ref: "#/components/parameters/name"
+        - $ref: "#/components/parameters/surname"
+        - $ref: "#/components/parameters/patronymic"
+        - $ref: "#/components/parameters/age"
+        - $ref: "#/components/parameters/gender"
+      description: |- 
+        Получить людей с параметрами и пагинацией
+      summary: Получить людей
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                humans:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Human"
+      responses:
+        200:
+          description: OK
+    post:
+      tags:
+        - human
+      operationId: humanCreate
+      description: Создание человека
+      summary: Создание человека
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HumanCreate"
+      responses:
+        201:
+          description: OK
+        400:
+          description: Ошибка валидации создания человека
+  /humans/{id}:
+    patch:
+      tags:
+        - human
+      operationId: humanPatch
+      description: Обновление данных человека по его ID
+      summary: Обновление человека
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HumanUpdate"
+      responses:
+        201:
+          description: OK
+        400:
+          description: Ошибка валидации обновления человека
+        404:
+          description: Человек не найден
+        500:
+          description: Ошибка сервера
+    delete:
+      tags:
+        - human
+      operationId: humanDelete
+      description: Удаление человека по его ID
+      summary: Удаление человека
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        204:
+          description: OK
+        404:
+          description: Человек не найден
+components:
+  parameters:
+    id:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+        example: 23196
+      description: ID человека
+    id-pagination:
+      in: path
+      name: id
+      required: false
+      schema:
+        type: integer
+        example: 23196
+      description: ID человека
+    start:
+      in: path
+      name: start
+      required: true
+      schema:
+        type: integer
+        example: 0
+      description: Откуда начать пагинацию
+    size:
+      in: path
+      name: size
+      required: true
+      schema:
+        type: integer
+        example: 100
+      description: Размер пагинации
+    name:
+      in: path
+      name: name
+      required: false
+      schema:
+        type: string
+        example: Dmitry
+      description: Имя человека
+    surname:
+      in: path
+      name: surname
+      required: false
+      schema:
+        type: string
+        example: surname
+      description: Фамилия человека
+    patronymic:
+      in: path
+      name: patronymic
+      required: false
+      schema:
+        type: string
+        example: patronymic
+      description: Отчество человека
+    age:
+      in: path
+      name: age
+      required: false
+      schema:
+        type: integer
+        example: 34
+      description: Возраст человека
+    gender:
+      in: path
+      name: gender
+      required: false
+      schema:
+        type: string
+        example: male
+      description: Пол человека
+  schemas:
+    HumanUpdate:
+      type: object
+      description: Обновление данных человека
+      properties:
+        name:
+          type: string
+          example: Имя
+        surname:
+          type: string
+          example: Фамилия
+        patronymic:
+          type: string
+          example: Отчество
+        age:
+          type: integer
+          example: 63
+        gender:
+          type: string
+          example: male
+        added_nationalities:
+          type: array
+          items:
+            type: object
+            properties:
+              country_id:
+                type: string
+                example: RU
+              probability:
+                type: integer
+                example: 0.44
+        deleted_nationalities:
+          type: array
+          items:
+            type: string
+            example: US
+    HumanCreate:
+      type: object
+      description: Данные создания нового человека
+      properties:
+        name:
+          type: string
+          example: Имя
+        surname:
+          type: string
+          example: Фамилия
+        patronymic:
+          type: string
+          example: Отчество
+    Human:
+      type: object
+      description: Данные человека
+      properties:
+        name:
+          type: string
+          example: Имя
+        surname:
+          type: string
+          example: Фамилия
+        patronymic:
+          type: string
+          example: Отчество
+        age:
+          type: integer
+          example: 63
+        gender:
+          type: string
+          example: male
+        nationalities:
+          type: array
+          items:
+            type: object
+            properties:
+              country_id:
+                type: string
+                example: "US"
+              probability:
+                type: integer
+                example: 0.066
