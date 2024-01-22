@@ -236,16 +236,3 @@ func TestHuman_Delete(t *testing.T) {
 		})
 	}
 }
-
-//func dropTestTableContent(t *testing.T) {
-//	var dropScrips = []string{
-//		`DELETE FROM humans_nationality`,
-//		`DELETE FROM humans`,
-//	}
-//
-//	for _, sql := range dropScrips {
-//		if _, err := pool.Exec(context.TODO(), sql); err != nil {
-//			t.Errorf("ошибка чистки БД: %s", err)
-//		}
-//	}
-//}
